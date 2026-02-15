@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Personal Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       /* Light theme */
@@ -63,7 +64,13 @@
       padding: 2.5rem 1.5rem;
     }
 
-    header { display: grid; grid-template-columns: 1fr auto; align-items: center; margin-bottom: 4rem; }
+    /* ===== Dark Mode ===== */
+    body.dark .typing-text {
+      color: #bbb;
+    }
+
+
+    header { display: grid; grid-template-columns: 1fr auto; align-items: center; margin-bottom: 4rem; position: sticky; top: 0; background-color: var(--bg); z-index: 1000; padding: 1rem 0; }
     .logo { font-weight: 700; letter-spacing: 0.5px; font-size: 1.2rem; }
     nav a { margin-left: 1.5rem; font-size: 0.95rem; color: var(--muted); }
     nav a:hover { color: var(--text); }
@@ -85,7 +92,78 @@
     .cta.secondary:hover { background: var(--accent-soft); filter: none; }
 
     .profile-card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; padding: 2rem; text-align: center; }
-    .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #22d3ee); margin: 0 auto 1.2rem; }
+
+    .avatar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .avatar img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      padding: 6px;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .avatar img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(99,102,241,0.35);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+    body.dark .avatar img {
+      box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+    }
+
+    .social-icons a {
+      color: #555;
+      font-size: 20px;
+      margin: 10px;
+      transition: 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #6366f1;
+      transform: translateY(-3px);
+    }
+
+    body.dark .social-icons a {
+      color: #ccc;
+    }
+
+    /* Typing text fixed size to prevent layout jumps */
+    #typing-skills {
+      display: flex;              /* enable flexbox */
+      justify-content: center;    /* horizontal center */
+      align-items: center;        /* vertical center */
+      min-height: 150px;          /* adjust height if needed */
+      margin-bottom: 4.5rem;
+    }
+
+    .typing-text {
+      display: inline-block;
+      min-width: 250px;           /* width enough for longest text */
+      font-weight: 500;
+      font-size: 2rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid var(--accent); /* cursor */
+      padding-right: 4px;
+      animation: blink-cursor 1s steps(1) infinite;
+    }
+
     .profile-card h3 { margin-bottom: 0.2rem; } .profile-card p { color: var(--muted); font-size: 0.9rem; }
 
     section { margin-bottom: 4.5rem; } section h2 { font-size: 1.8rem; margin-bottom: 1.5rem; }
@@ -107,96 +185,140 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">LogoHere</div>
-      <nav>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <button id="themeToggle" aria-label="Toggle theme" class="theme-toggle">🌙</button>
-      </nav>
-    </header>
+<div class="container">
+  <header>
+    <div class="logo" id="logo">LogoHere</div>
+    <nav>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button id="themeToggle" aria-label="Toggle theme" class="theme-toggle">🌙</button>
+    </nav>
+  </header>
 
-    <section class="hero">
-      <div>
-        <h1>Hi, I’m <span>Michael John Baco</span></h1>
-        <p>
-          I’m a software developer with a strong focus on Java and backend development. I enjoy designing reliable systems,
-          writing clean and maintainable code, and continuously improving applications through thoughtful architecture
-          and best practices. I’m especially interested in building APIs and services that scale well and are easy to maintain.
-        </p>
-        <a class="cta" href="#projects">View My Work →</a>
-      </div>
-      <div class="profile-card">
-        <div class="avatar"></div>
-        <h3>Michael John Baco</h3>
-        <p>Java & Programmer Analyst II</p>
-      </div>
-    </section>
-
-    <section id="skills">
-      <h2>Skills</h2>
-      <div class="grid">
-        <div class="card"><h3>Backend Development</h3><p><span class="skill-icon">☕</span>Java, Spring Boot, REST APIs, JPA / Hibernate</p></div>
-        <div class="card"><h3>Databases</h3><p><span class="skill-icon">🗄️</span>SQL, Relational Database Design, Data Integrity</p></div>
-        <div class="card"><h3>Tools & Practices</h3><p><span class="skill-icon">🛠️</span>Git, Debugging, Code Reviews, Clean Code, Maintainable Systems</p></div>
-        <div class="card"><h3>Frontend Basics</h3><p><span class="skill-icon">💻</span>HTML, CSS, Responsive Design, Accessibility</p></div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <h2>Selected Projects</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Policy & Resource Management System</h3>
-          <p>A backend-driven system built to manage policy-related resources and reference data. Designed DB relationships and enforced validations using Java, Hibernate, and SQL.</p>
-        </div>
-        <div class="card">
-          <h3>Spring Boot REST API</h3>
-          <p>Developed RESTful services with layered architecture (Controller, Service, Repository), implemented DTOs, validation, and CRUD operations backed by JPA.</p>
-        </div>
-        <div class="card">
-          <h3>Internal Tools & Process Automation</h3>
-          <p>Built internal utilities to automate repetitive tasks, improve data consistency, and reduce manual effort for the team.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <h2>About Me</h2>
-      <p style="color: var(--muted); max-width: 700px;">
-        I’m a detail-oriented software developer with hands-on experience in Java-based applications and backend systems.
-        My work often involves building and maintaining REST APIs, working with relational databases, and applying
-        clean architecture principles. I value readability, proper error handling, and maintainability.
+  <section class="hero">
+    <div>
+      <h1>Hi, I’m <span>Michael John Baco</span></h1>
+      <p>
+        I’m a software developer with a strong focus on Java and backend development. I enjoy designing reliable systems,
+        writing clean and maintainable code, and continuously improving applications through thoughtful architecture
+        and best practices. I’m especially interested in building APIs and services that scale well and are easy to maintain.
+        <a href="resume/baco-resume.pdf" title="Open Resume" target="_blank"><i class="fas fa-download"></i></a>
       </p>
-    </section>
+      <a class="cta" href="#projects">View My Work →</a>
+    </div>
+    <div class="profile-card">
+      <div class="avatar">
+        <img src="images/test-personal-portfolio-image.jpg" alt="Michael John Baco">
+      </div>
+      <div class="social-icons">
+        <a href="https://github.com/makolbee" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/michael-john-baco-52ba28219/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:michaeljohnbaco@gmail.com" title="Email" target="_blank"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.facebook.com/fbpseudoc/" title="Facebook" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/igbacomd/" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@michaeljohnbaco2480" title="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+      </div>
+      <h3>Michael John Baco</h3>
+      <p>Java & Programmer Analyst II</p>
+    </div>
+  </section>
 
-    <section id="contact">
-      <h2>Get in Touch!</h2>
-      <p style="color: var(--muted); margin-bottom: 1rem;">
-        Open to full-time roles, projects, or collaboration as a backend / Java developer. Let’s connect!
-      </p>
-      <a class="cta" href="mailto:your@email.com">Send Me an Email</a>
-    </section>
+  <section id="typing-skills">
+    <p class="typing-text"><span id="typing"></span></p>
+  </section>
 
-    <footer>
-      © 2026 Michael John Baco · Built with care
-    </footer>
-  </div>
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="grid">
+      <div class="card"><h3>Backend Development</h3><p><span class="skill-icon">☕</span>Java, Spring Boot, REST APIs, JPA / Hibernate</p></div>
+      <div class="card"><h3>Databases</h3><p><span class="skill-icon">🗄️</span>SQL, Relational Database Design, Data Integrity</p></div>
+      <div class="card"><h3>Tools & Practices</h3><p><span class="skill-icon">🛠️</span>Git, Debugging, Code Reviews, Clean Code, Maintainable Systems</p></div>
+      <div class="card"><h3>Frontend Basics</h3><p><span class="skill-icon">💻</span>HTML, CSS, Responsive Design, Accessibility</p></div>
+    </div>
+  </section>
 
-  <script>
-    const toggle = document.getElementById('themeToggle');
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) { document.documentElement.setAttribute('data-theme', storedTheme); toggle.textContent = storedTheme === 'dark' ? '🌙' : '🌞'; }
-    toggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      toggle.textContent = next === 'dark' ? '🌙' : '🌞';
+  <section id="projects">
+    <h2>Selected Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Policy & Resource Management System</h3>
+        <p>A backend-driven system built to manage policy-related resources and reference data. Designed DB relationships and enforced validations using Java, Hibernate, and SQL.</p>
+      </div>
+      <div class="card">
+        <h3>Spring Boot REST API</h3>
+        <p>Developed RESTful services with layered architecture (Controller, Service, Repository), implemented DTOs, validation, and CRUD operations backed by JPA.</p>
+      </div>
+      <div class="card">
+        <h3>Internal Tools & Process Automation</h3>
+        <p>Built internal utilities to automate repetitive tasks, improve data consistency, and reduce manual effort for the team.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p style="color: var(--muted); max-width: 700px;">
+      I’m a detail-oriented software developer with hands-on experience in Java-based applications and backend systems.
+      My work often involves building and maintaining REST APIs, working with relational databases, and applying
+      clean architecture principles. I value readability, proper error handling, and maintainability.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>Get in Touch!</h2>
+    <p style="color: var(--muted); margin-bottom: 1rem;">
+      Open to full-time roles, projects, or collaboration as a backend / Java developer. Let’s connect!
+    </p>
+    <a class="cta" href="mailto:michaeljohnbaco@gmail.com">Send Me an Email</a>
+  </section>
+
+  <footer>
+    © 2026 Michael John Baco · Built with care
+  </footer>
+</div>
+
+<script>
+  // Smooth scroll when clicking LogoHere
+  document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.getElementById('logo');
+    logo.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-  </script>
+  });
+
+  // Typing effect
+  const roles = ["Frontend Developer","UI/UX Enthusiast","JavaScript Developer","Problem Solver"];
+  let index = 0, charIndex = 0, isDeleting = false;
+
+  function typeEffect() {
+    const typingElement = document.getElementById("typing");
+    const currentText = roles[index];
+    typingElement.textContent = isDeleting
+      ? currentText.substring(0, charIndex--)
+      : currentText.substring(0, charIndex++);
+
+    if (!isDeleting && charIndex === currentText.length) {
+      setTimeout(() => isDeleting = true, 1000);
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      index = (index + 1) % roles.length;
+    }
+    setTimeout(typeEffect, isDeleting ? 50 : 100);
+  }
+  typeEffect();
+
+  const toggle = document.getElementById('themeToggle');
+  const storedTheme = localStorage.getItem('theme');
+  if (storedTheme) { document.documentElement.setAttribute('data-theme', storedTheme); toggle.textContent = storedTheme === 'dark' ? '🌙' : '🌞'; }
+  toggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggle.textContent = next === 'dark' ? '🌙' : '🌞';
+  });
+</script>
 </body>
 </html>
